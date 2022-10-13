@@ -1,21 +1,36 @@
 echo " Welcome to the flip coin simulation program"
 
-read -p "Enter the time upto which you want to flip a coin: " n;
 
 count_1=0
 count_2=0
-
-for (( i=1; i<=n; i++ ))
+while true
 do
-       flip=$(($(($RANDOM%10))%2))
-       if [ $flip -eq 1 ]
-       then
-            count_1=$(($count_1 + 1))
-       else
-            count_2=$(($count_2 + 1))
-       fi
+        flip=$((RANDOM%2))
+        if [ $flip -eq 1 ]
+        then
+              count_1=$(($count_1+1))
+              if [ $count_1 -eq 21 ]
+              then
+                   break
+              fi
+        else
+              count_2=$(($count_2+1))
+              if [ $count_2 -eq 21 ]
+              then
+                   break
+              fi
+        fi
 done
 
-echo "Heads won $count_1 times"
-echo "Tails won $count_2 times"
+if [ $count_1 -eq 21 ]
+then
+     diff=$(( $count_1 - $count_2 ))
+     echo "Heads Wins by $diff"
+elif [ $count_2 -eq 21 ]
+then
+     diff=$(( $count_2 - $count_1 ))
+     echo "Tails Wins by $diff"
+else
+    echo "Its a Tie"
+fi
 
